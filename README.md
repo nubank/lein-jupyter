@@ -4,6 +4,7 @@ and [JupyterLab](https://github.com/jupyterlab/jupyterlab).
 
 ![jupiter](https://upload.wikimedia.org/wikipedia/commons/0/0a/Tango_Jupiter.svg)
 [![Clojars Project](https://img.shields.io/clojars/v/nubank/lein-jupyter.svg)](https://clojars.org/nubank/lein-jupyter)
+[![CircleCI](https://circleci.com/gh/nubank/lein-jupyter/tree/master.svg?style=svg&circle-token=3487a121dd72bbd394a12c9a3d6680ef8f6e9991)](https://circleci.com/gh/nubank/lein-jupyter/tree/master)
 
 ## Features
 
@@ -33,7 +34,7 @@ which will need to be performed to use the `lein jupyter lab` command.
     vector in your `:plugins` list in your `project.clj`.  A simple project.clj might look
     like
 
-    ```    
+    ```clojure
     (defproject my-project "0.1.0-SNAPSHOT"
       :description "FIXME: write description"
       :url "http://example.com/FIXME"
