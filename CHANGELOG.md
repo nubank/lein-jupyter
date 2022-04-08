@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.1.24-NUBANK-2
+- Fix internal dependency of `dev.nubank/clojupyter` on kernel run
+
 ## 0.1.24-NUBANK
 - Upgrade `dev.nubank/clojupyter` to verion 0.3.3-alpha2-NUBANK
 
