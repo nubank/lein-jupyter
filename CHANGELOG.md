@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.2.24-NUBANK-4
+- Bump clojupyter version to 0.3.6;
+
 ## 0.2.24-NUBANK-3
 - Bump clojupyter version to 0.3.3;
 - Change clojupyter dependency back to the original repo instead of nubank's fork;
