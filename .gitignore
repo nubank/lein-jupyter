@@ -12,3 +12,6 @@ pom.xml.asc
 /.idea/
 lein-jupyter.iml
 todo.md
+.calva/
+.lsp/.cache
+.clj-kondo/.cache

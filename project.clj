@@ -3,8 +3,8 @@
   :url "https://github.com/nubank/lein-jupyter"
   :license {:name "MIT License"}
 
-  :repositories [["central" {:url "https://repo1.maven.org/maven2/" :snapshots false}]
-                 ["clojars" {:url "https://clojars.org/repo/"}]]
+  :repositories [["publish" {:url "https://clojars.org/repo"
+                             :sign-releases false}]]
 
   :dependencies [[clojupyter "0.3.6"]                           ;; this dependency needs to be
                                                                 ;; updated in leiningen.jupyter.kernel
