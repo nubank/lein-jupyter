@@ -10,5 +10,8 @@
                                                                 ;; updated in leiningen.jupyter.kernel
                                                                 ;; manually.
                  [org.apache.commons/commons-exec "1.3"]]
+
+  :profiles {:dev {:plugins [[lein-project-version "0.1.0"]]}}
+
   :resource-paths ["resources"]
   :eval-in-leiningen true)
