@@ -3,7 +3,7 @@
             [clojure.java.io :as io]
             [clojure.string :refer [includes? lower-case]]
             [leiningen.core.eval :as eval]
-            [leiningen.core.main]))
+            [leiningen.core.main :as leiningen.main]))
 
 (defn run-kernel [project argv]
   (let [curr-deps (or (:dependencies project) [])
@@ -61,12 +61,18 @@ the current supported systems are Linux Mac and Windows (In that order).")
 
   The kernel will be installed at <location>/lein-clojure."
   ([location]
-   (-> location io/as-file create-kernel)
-   (leiningen.core.main/info "kernel successfully installed at " (str location)))
+   (try
+     (-> location io/as-file create-kernel)
+     (leiningen.main/info "kernel successfully installed at " (str location))
+     true
+     (catch Exception e
+       (leiningen.main/warn "error installing the clojupyter kernel at " (str location)
+                            (.getMessage e))
+       false)))
   ([]
    (let [os (get-os)]
      (if (nil? os)
-       (leiningen.core.main/warn architecture-not-yet-supported)
+       (leiningen.main/warn architecture-not-yet-supported)
        (-> os (get-platform-specific-kernel-dir (System/getenv)) install-kernel)))))
 
 (defn kernel-installed?
