@@ -29,40 +29,34 @@
     (doall (map #(move-resource (io/file tmp-dir (.getName %))  (get-resource-by-name %)) resources))
     tmp-dir))
 
-(defmulti enable-extension* (fn [major-version & _args] major-version))
+(defn nbextension-cmd
+  [major-version jupyter-ex & subcommand]
+  (if (>= major-version 4)
+    (concat ["jupyter-nbclassic-extension"] subcommand)
+    (concat [jupyter-ex "nbextension"] subcommand)))
 
-(defmethod enable-extension* 3
-  [_ jupyter-ex extension-main]
-  (sh jupyter-ex "nbextension" "enable" extension-main "--user"))
-
-(defmethod enable-extension* 4
-  [_ _jupyter-ex extension-main]
-  (sh "jupyter-nbclassic-extension" "enable" extension-main "--user"))
+(defn enable-extension-sh
+  [major-version jupyter-ex extension-main]
+  (apply sh (nbextension-cmd major-version jupyter-ex "enable" extension-main "--user")))
 
 (defn enable-extension
   "enable the lein-jupyter-parinfer extension the user space"
   [jupyter-version jupyter-exe]
-  (let [enable-out (enable-extension* jupyter-version jupyter-exe "lein-jupyter-parinfer/index")]
+  (let [enable-out (enable-extension-sh jupyter-version jupyter-exe "lein-jupyter-parinfer/index")]
     (if (not= 0 (:exit enable-out))
       (leiningen.main/warn "Did not succeed to enable lein-jupyter-parinfer extension"
                            (:err enable-out))
       true)))
 
-(defmulti install-extension* (fn [major-version & _args] major-version))
-
-(defmethod install-extension* 3
-  [_ jupyter-exe extension-dir]
-  (sh jupyter-exe "nbextension" "install" extension-dir "--user"))
-
-(defmethod install-extension* 4
-  [_ _jupyter-exe extension-dir]
-  (sh "jupyter-nbclassic-extension" "install" extension-dir "--user"))
+(defn install-extension-sh
+  [major-version jupyter-exe extension-dir]
+  (apply sh (nbextension-cmd major-version jupyter-exe "install" extension-dir "--user")))
 
 (defn install-extension
   "Instal the lein-jupyter-parinfer extension the user space"
   [jupyter-version jupyter-exe]
   (let [extension-dir (copy-resource-dir-in-tmp-dir "lein-jupyter-parinfer")
-        install-out (install-extension* jupyter-version jupyter-exe (.getCanonicalPath extension-dir))]
+        install-out (install-extension-sh jupyter-version jupyter-exe (.getCanonicalPath extension-dir))]
     (if (not= 0 (:exit install-out))
       (leiningen.main/warn "Did not succeed to install lein-jupyter-parinfer extension"
                            (:err install-out))

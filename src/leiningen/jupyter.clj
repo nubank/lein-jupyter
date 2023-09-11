@@ -18,7 +18,7 @@
 (defn ^:private jupyter-start-sub-command
   [jupyter-exe]
   (let [jupyter-version (utils/jupyterlab-version jupyter-exe)]
-    (if (= 4 jupyter-version)
+    (if (>= 4 jupyter-version)
       "nbclassic"
       "notebook")))
 
@@ -44,7 +44,7 @@
     (into env new-envs)))
 
 (defn notebook [project lein-wd & args]
-  (when (not (kernel-installed?))
+  (when-not (kernel-installed?)
     (leiningen.main/abort "It seems you have not installed the lein-jupyter kernel.  "
                           "You should run `lein jupyter install-kernel`."))
   (let [new-env {"LEIN_WORKING_DIRECTORY" lein-wd}
@@ -52,7 +52,7 @@
     (start-jupyter-notebook project env args)))
 
 (defn lab [project lein-wd & args]
-  (when (not (kernel-installed?))
+  (when-not (kernel-installed?)
     (leiningen.main/abort "It seems you have not installed the lein-jupyter kernel.  "
                           "You should run `lein jupyter install-kernel`."))
   (let [new-env {"LEIN_WORKING_DIRECTORY" lein-wd}
