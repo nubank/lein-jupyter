@@ -22,9 +22,13 @@
 
 (deftest major-version-test
   (is (= 3
-         (utils/major-version "3.6.2"))))
+         (utils/major-version "3.6.2")))
+  (is (= nil
+         (utils/major-version "not installed")))
+  (is (= nil
+         (utils/major-version "x.y.z"))))
 
 (deftest jupyterlab-version-test
   (with-redefs [sh (mock-sh {:exit 0 :out version-output})]
     (is (= 3
-           (utils/jupyterlab-version "jupyter-test")))))
+           (utils/maybe-jupyterlab-version "jupyter-test")))))

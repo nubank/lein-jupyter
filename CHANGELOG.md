@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.2.24-NUBANK-6
+- Fix NPE when getting the jupyterlab version for nbclassic;
+
+## 0.2.24-NUBANK-5
+- Add support for nbclassic when clojupyter >= 4.0.0
+- Abort the execution when cannot install kernel and extensions;
+
 ## 0.2.24-NUBANK-4
 - Bump clojupyter version to 0.3.6;
 

@@ -17,8 +17,8 @@
 
 (defn ^:private jupyter-start-sub-command
   [jupyter-exe]
-  (let [jupyter-version (utils/jupyterlab-version jupyter-exe)]
-    (if (>= jupyter-version 4)
+  (let [jupyter-version (utils/maybe-jupyterlab-version jupyter-exe)]
+    (if (and jupyter-version (>= jupyter-version 4))
       "nbclassic"
       "notebook")))
 

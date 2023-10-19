@@ -6,6 +6,7 @@
    [leiningen.jupyter.params :as params]
    [leiningen.jupyter.utils :as utils])
   (:import
+   [java.io IOException]
    [java.nio.file Files]
    [java.nio.file.attribute FileAttribute]))
 
@@ -31,7 +32,7 @@
 
 (defn nbextension-cmd
   [major-version jupyter-ex & subcommand]
-  (if (>= major-version 4)
+  (if (and major-version (>= major-version 4))
     (concat ["jupyter-nbclassic-extension"] subcommand)
     (concat [jupyter-ex "nbextension"] subcommand)))
 
@@ -50,7 +51,12 @@
 
 (defn install-extension-sh
   [major-version jupyter-exe extension-dir]
-  (apply sh (nbextension-cmd major-version jupyter-exe "install" extension-dir "--user")))
+  (let [install-ex-cmd (nbextension-cmd major-version jupyter-exe "install" extension-dir "--user")]
+    (try
+      (apply sh install-ex-cmd)
+      (catch IOException ex
+        (leiningen.main/warn "Did not succeed to run extension installer:" install-ex-cmd ex)
+        {:exit -1 :err (.getMessage ex)}))))
 
 (defn install-extension
   "Instal the lein-jupyter-parinfer extension the user space"
@@ -64,6 +70,6 @@
 
 (defn install-and-enable-extension [project]
   (let [jupyter-exe (params/jupyer-executable project)
-        jupyter-version (utils/jupyterlab-version jupyter-exe)]
+        jupyter-version (utils/maybe-jupyterlab-version jupyter-exe)]
     (and (install-extension jupyter-version jupyter-exe)
          (enable-extension jupyter-version jupyter-exe))))

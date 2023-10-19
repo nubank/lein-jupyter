@@ -1,7 +1,8 @@
 (ns leiningen.jupyter.utils
   (:require
    [clojure.java.shell :refer [sh]]
-   [clojure.string :as string]))
+   [clojure.string :as string]
+   [leiningen.core.main :as leiningen.main]))
 
 (defn ^:private run-jupyter-versions-cmd
   [jupyter-exec]
@@ -40,9 +41,10 @@
           first
           to-int))
 
-(defn jupyterlab-version
+(defn maybe-jupyterlab-version
   [jupyter-exe]
-  (-> jupyter-exe
-      jupyter-versions
-      (get "jupyterlab")
-      major-version))
+  (let [jupyterlab-version (-> jupyter-exe jupyter-versions (get "jupyterlab"))
+        major-version (major-version jupyterlab-version)]
+    (when-not major-version
+      (leiningen.main/warn "Did not succeed to get jupyterlab version" jupyterlab-version))
+   major-version))
