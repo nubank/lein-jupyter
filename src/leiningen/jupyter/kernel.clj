@@ -1,7 +1,7 @@
 (ns leiningen.jupyter.kernel
   (:require [cheshire.core :as cheshire]
             [clojure.java.io :as io]
-            [clojure.string :refer [includes? lower-case]]
+            [clojure.string :refer [includes?]]
             [leiningen.core.eval :as eval]
             [leiningen.core.main :as leiningen.main]))
 

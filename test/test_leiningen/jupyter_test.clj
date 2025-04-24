@@ -1,5 +1,5 @@
 (ns test-leiningen.jupyter-test
-    (:require [clojure.test :refer :all]
+    (:require [clojure.test :refer [deftest is testing]]
               [clojure.java.io :as io]
               [leiningen.jupyter :as jupyter]
               [leiningen.jupyter.kernel :as kernel]))
