@@ -1,4 +1,4 @@
-(defproject nubank/lein-jupyter "0.2.24-NUBANK-7"
+(defproject nubank/lein-jupyter "0.2.24-NUBANK-8"
   :description "Leiningen plugin for jupyter notebook."
   :url "https://github.com/nubank/lein-jupyter"
   :license {:name "MIT License"}
