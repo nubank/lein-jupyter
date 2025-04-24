@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.2.24-NUBANK-7
+- Bump clojupyter version to 0.4.332;
+
 ## 0.2.24-NUBANK-6
 - Fix NPE when getting the jupyterlab version for nbclassic;
 
