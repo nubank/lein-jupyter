@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.2.24-NUBANK-8
+- Fix release workflow depending on old test workflows;
+
 ## 0.2.24-NUBANK-7
 - Bump clojupyter version to 0.4.332;
 
